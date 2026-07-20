@@ -1,101 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mark Holder | RE/MAX Masters</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
-<style>
-  body {
-    margin: 0;
-    background-color: #000;
-    font-family: 'Montserrat', sans-serif;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
+        <span class="max">MAX</span>
+        <span class="trademark">®</span>
+      </div>
+    </div>
 
-  .card {
-    width: 800px;
-    height: 600px;
-    background-color: #000;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15);
-    overflow: hidden;
-    position: relative;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-  }
+    <div class="details">
+      <strong>Mark Holder</strong><br>
+      Property Practitioner | RE/MAX Masters<br>
+      <a href="tel:+27720372480">📱 072 037 2480</a><br>
+      <a href="mailto:markholder@remax-masters.co.za">✉️ markholder@remax-masters.co.za</a><br>
+      <a href="https://www.remax-masters.co.za" target="_blank">🌐 www.remax-masters.co.za</a>
+    </div>
 
-  .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(255, 255, 255, 0.25);
-  }
+    <div class="buttons">
+      <button onclick="downloadVCard()">📇 Add to Contacts</button>
+      <button onclick="toggleQR()">🔳 Show QR Code</button>
+      <button onclick="openWhatsApp()">💬 WhatsApp Me</button>
+    </div>
+  </div>
 
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 60%;
-    position: relative;
-  }
+  <div class="qr-popup" id="qrPopup">
+    <img id="qrCode" alt="QR Code" />
+    <button class="close-btn" onclick="toggleQR()">Close</button>
+  </div>
 
-  .header img.balloon {
-    position: absolute;
-    top: 40px;
-    left: 60px;
-    width: 70px;
-  }
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script>
+    function downloadVCard() {
+      const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:Mark Holder
+N:Holder;Mark;;;
+TITLE:Property Practitioner
+ORG:RE/MAX Masters
+TEL;TYPE=CELL:+27720372480
+EMAIL:markholder@remax-masters.co.za
+URL:https://www.remax-masters.co.za
+ADR;TYPE=WORK:;;Block B, Rock Cottage Office Park, Cnr Johan Voster & Christian de Wet;Weltevreden Park;;;South Africa
+END:VCARD`;
+      const blob = new Blob([vcard], { type: 'text/vcard' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Mark_Holder_REMAX.vcf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
 
-  .header .remax {
-    font-size: 150px;
-    font-weight: 900;
-    letter-spacing: -5px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-  }
+    function toggleQR() {
+      const popup = document.getElementById('qrPopup');
+      const qrImage = document.getElementById('qrCode');
+      if (popup.style.display === 'flex') {
+        popup.style.display = 'none';
+      } else {
+        QRCode.toDataURL('https://www.remax-masters.co.za', function (err, url) {
+          if (!err) qrImage.src = url;
+        });
+        popup.style.display = 'flex';
+      }
+    }
 
-  .header .re {
-    transform: skew(-8deg);
-  }
-
-  .header .max {
-    transform: skew(8deg);
-  }
-
-  .header img.profile {
-    height: 220px;
-    width: auto;
-    border-radius: 0;
-    margin: 0 20px;
-    z-index: 2;
-  }
-
-  .details {
-    display: flex;
-    justify-content: space-between;
-    padding: 40px 60px;
-    font-size: 16px;
-  }
-
-  .left, .right {
-    width: 45%;
-  }
-
-  .left h2 {
-    margin: 0;
-    font-weight: 700;
-  }
-
-  .left h3 {
-    margin-top: 5px;
-    font-weight: 400;
-    color: #cfcfcf;
-  }
-
-  .info {
-    margin-top: 20px;
-    line-height: 1
-
+    function openWhatsApp() {
+      const phoneNumber = "27720372480"; // no + or spaces
+      const message = encodeURIComponent("Hi Mark, I found your digital business card and would like to get in touch.");
+      window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+    }
+  </script>
+</body>
+</html>
+ 

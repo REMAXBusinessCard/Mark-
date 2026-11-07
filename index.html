@@ -196,5 +196,32 @@ END:VCARD`;
       window.open("https://wa.me/?text=" + message, '_blank');
     }
   </script>
+<!-- ===== INTRO AUDIO ===== -->
+<audio id="introAudio" src="intro.mp3" preload="auto"></audio>
+
+<div id="introOverlay" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;
+  background:#232323;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:18px;padding:24px;text-align:center;
+  font-family:'Montserrat',Arial,sans-serif;color:#ffffff;">
+  <div style="font-size:24px;line-height:1.2;"><b>Mark</b> Holder</div>
+  <div style="font-size:13px;opacity:.8;">REMAX Masters</div>
+  <button id="introStartBtn" type="button" style="font-family:inherit;font-size:17px;
+    font-weight:700;color:#ffffff;background:#ff1200;border:none;border-radius:0;
+    padding:16px 30px;cursor:pointer;margin-top:8px;">
+    &#9654; Tap to open my card
+  </button>
+</div>
+
+<script>
+  document.getElementById('introStartBtn').addEventListener('click', function () {
+    var audio = document.getElementById('introAudio');
+    try {
+      var p = audio.play();
+      if (p && p.catch) { p.catch(function () {}); }
+    } catch (e) {}
+    document.getElementById('introOverlay').style.display = 'none';
+  });
+</script>
+<!-- ===== END INTRO AUDIO ===== -->
 </body>
 </html>
